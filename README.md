@@ -6,8 +6,6 @@
 
 - `커리큘럼` : [자바 ORM 표준 JPA 프로그래밍 - 기본편](https://www.inflearn.com/course/ORM-JPA-Basic/dashboard) 뿌시기 👊
 
-- `분량` : 섹션 1개 강의 들어오기!
-
 - `시간` : 매주 화요일 PM 08 : 00 ~ 
 
   <br>
