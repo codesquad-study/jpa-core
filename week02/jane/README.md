@@ -207,6 +207,34 @@ JPA가 엔티티 데이터에 접근하는 방식 지정
 - AccessType.PROPERTY
 - Getter 사용
 
+## 연관관계
+
+- 외래 키가 있는 주문을 연관관계의 주인으로 정하는 것이 좋다
+- 주인이 아닌 쪽은 조회용, 거울
+- 주인을 업데이트해야 값이 업데이트 된다.
+- 연관관계 메서드
+  - 양방향 연관관계는 연관관계의 주인을 정해줘야 한다. 양쪽 모두 값을 바꿀 수 있으면 혼란스러움
+  - 위치는 control 하는쪽이 들고있는게 좋다 (주인쪽)
+
+```java
+    // 연관관계 메서드
+    public void setMember(Member member) {
+        this.member = member;
+        member.getOrders().add(this);
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+```
+
+
+
+## 기타
+
+- 엔티티 컨트롤러에 반환 x &rarr;엔티티 변경으로 api 스펙이 달라져버림
 
 
 ---
