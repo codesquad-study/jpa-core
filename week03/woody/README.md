@@ -87,7 +87,7 @@
 
 
 
-![일대일-대상테이블외래키](일대일-대상테이블외래키.png)
+![일대일-대상테이블외래키](imgs/일대일-대상테이블외래키.png)
 
 
 
@@ -97,7 +97,7 @@
 
 - 연결 테이블용 엔티티 추가(연결 테이블을 엔티티로 승격! 더 이상 숨겨진 테이블이 아니다!)
 
-![다대다](다대다.png)
+![다대다](imgs/다대다.png)
 
 ```java
 public class Member{
@@ -145,7 +145,7 @@ public class Locker {
   - 자식 테이블 구분을 위한 칼럼
   - 운영 측면에서 넣어주는 것이 좋다, DB 측면에서는 Item 데이터가 어떤 데이터를 위해서 들어왔는지 모르기 때문에
 
-  <img src="Screen Shot 2021-09-14 at 3.25.01 PM.png" alt="Screen Shot 2021-09-14 at 3.25.01 PM" style="zoom:50%;" />
+  <img src="imgs/Screen Shot 2021-09-14 at 3.25.01 PM.png" alt="Screen Shot 2021-09-14 at 3.25.01 PM" style="zoom:50%;" />
 
 - @DescriminatorValue("M")
 
@@ -156,7 +156,7 @@ public class Locker {
 ### 1. 조인 전략 매핑
 
 - @Inheritance(strategy = InheritanceType.JOINED) // 👈👈 조인 전략
-- ![Screen Shot 2021-09-14 at 3.22.21 PM](Screen Shot 2021-09-14 at 3.22.21 PM.png)
+- ![Screen Shot 2021-09-14 at 3.22.21 PM](imgs/Screen Shot 2021-09-14 at 3.22.21 PM.png)
 
 **장점**
 
@@ -180,7 +180,7 @@ public class Locker {
 
 - @Inheritance(strategy = InheritanceType.SINGLE_TABLE) // 👈👈 디폴트 값이므로 생략 가능
 
-![Screen Shot 2021-09-14 at 4.56.58 PM](Screen Shot 2021-09-14 at 4.56.58 PM.png)
+<img src="imgs/Screen Shot 2021-09-14 at 4.56.58 PM.png" alt="Screen Shot 2021-09-14 at 4.56.58 PM" style="zoom:50%;" />
 
 - @DescriminatorColumn(name = "DTYPE") 설정 하지 않더라도 자동으로 생성
   - 구분 컬럼이 꼭 필요하기 때문
@@ -257,6 +257,10 @@ public class Member extends BaseEntity {
 }
 ```
 
+- 임베디드 무슨 차이?
+  - `MappedSuperclass` (상속) : 부모 클래스는 **단순히 자식 클래스에게 매핑 정보만 제공해주고 자신은 엔티티일 필요가 없음**
+  - `Embeddable` (조합) : 공통 프로퍼티를 객체로 분리하고 분리된 객체를 테이블에 매핑
+
 
 
 ## 프록시와 연관관계 관리
@@ -291,10 +295,8 @@ public class Team {
 ### em.find() vs em.getReference()
 
 - em.find() : 데이터베이스를 통해 실제 엔티티 객체 조회
-
 - em.getReference() : 데이터베이스 조회를 미루는 가짜(프록시) 엔티티 객체 조회
-
-  <img src="Screen Shot 2021-09-14 at 5.51.13 PM.png" alt="Screen Shot 2021-09-14 at 5.51.13 PM" style="zoom:80%;" />
+- ![Screen Shot 2021-09-14 at 4.56.58 PM](imgs/Screen Shot 2021-09-14 at 5.51.13 PM.png)
 
 ### 프록시 특징
 
@@ -302,7 +304,7 @@ public class Team {
 - 실제 클래스와 겉 모양이 같다
 - 사용하는 입장에서는 프록시인지 진짜 객체인지 구분하지 않고도 사용 가능
 
-![Screen Shot 2021-09-14 at 5.52.19 PM](Screen Shot 2021-09-14 at 5.52.19 PM.png)
+<img src="imgs/Screen Shot 2021-09-14 at 5.52.19 PM.png" alt="Screen Shot 2021-09-14 at 5.52.19 PM" style="zoom:50%;" />
 
 
 
@@ -327,7 +329,7 @@ Member member = em.getReference(Member.class, memberId);
 member.getName();
 ```
 
-![Screen Shot 2021-09-14 at 5.58.18 PM](Screen Shot 2021-09-14 at 5.58.18 PM.png)
+<img src="imgs/Screen Shot 2021-09-14 at 5.58.18 PM.png" alt="Screen Shot 2021-09-14 at 5.58.18 PM" style="zoom:50%;" />
 
 
 
@@ -357,7 +359,7 @@ member.getName();
 
 - DB를 조회할 필요가 없기 때문에
 
- ![Screen Shot 2021-09-14 at 6.09.23 PM](Screen Shot 2021-09-14 at 6.09.23 PM.png)
+ <img src="imgs/Screen Shot 2021-09-14 at 6.09.23 PM.png" alt="Screen Shot 2021-09-14 at 6.09.23 PM" style="zoom:50%;" />
 
 - em.find()를 통해 해당 엔티티가 영속성 컨텍스트에 등록이 되어있다면, 이후 getReference()를 호출하더라도 실제 엔티티 반환
 
@@ -368,7 +370,7 @@ member.getName();
   - JPA는 == 비교하는 같은 객체에 대해 같다고 응답해야 함
   - 아래 코드에서 첫 번째로 getReference()로 조회해 프록시를 가져오게 되면, 두 번째로 find()를 하더라도 아래 == 을 맞춰주기 위해서 find()도 프록시 객체를 가져온다
 
-![Screen Shot 2021-09-14 at 6.16.29 PM](Screen Shot 2021-09-14 at 6.16.29 PM.png)
+![Screen Shot 2021-09-14 at 6.16.29 PM](imgs/Screen Shot 2021-09-14 at 6.16.29 PM.png)
 
 - 준영속상태의 프록시를 초기화하면 문제가 발생
   - 프록시 객체는 초기화시에, 영속성 컨텍스트를 통해 실제 Entity를 가져오는데 프록시 객체가 영속성 컨텍스트가 준영속상태일 경우 초기화가 불가능
@@ -401,7 +403,7 @@ team.getName(); // 실제 team을 사용하는 시점에 프록시 초기화(DB 
 하나의 엔티티에 연관된 엔티티가 여러 개라면.. JOIN이 N번 나간다.. 성능상 문제가 된다
 
 - 즉시 로딩은 JPQL에서 N+1 문제 발생
-  - 예를 들어 select m from Member m" 이라는 JPQL을 실행하면, Member 객체를 가져오고서 Eager를 딱 보고 엇.. Team도 가져와야하네 뒤늦게 인지를 하고 Team을 조회하기 위한 select 쿼리를 한 번 더 날린다. 멤버 객체가 N개라면 이와 관련된 Team 조회 쿼리가 N번 나간다
+  - 예를 들어 "select m from Member m" 이라는 JPQL을 실행하면, Member 객체를 가져오고서 Eager를 딱 보고 엇.. Team도 가져와야하네 뒤늦게 인지를 하고 Team을 조회하기 위한 select 쿼리를 한 번 더 날린다. 멤버 객체가 N개라면 이와 관련된 Team 조회 쿼리가 N번 나간다
 
 → @ManyToOne, @OneToOne은 기본이 즉시 로딩이므로 지연 로딩 설정을 꼭 해주자
 
